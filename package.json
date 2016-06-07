@@ -25,7 +25,10 @@
     "node": "4.4.5"
   },
   "dependencies": {
+    "express": "^4.13.4",
     "jade": "^1.9.2",
-    "mongodb": "^2.1.21"
+    "mongodb": "^2.1.21",
+    "path": "^0.12.7",
+    "valid-url": "^1.0.9"
   }
 }
