@@ -4,6 +4,9 @@
 
 Visit or issue a GET request to `/new/url` where `url` is the URL you want shortened. If the provided URL is valid, a "shortened" URL will be provided under the `short_url` key of the JSON response which can be visited to redirect you to the original url.
 
+#### Example usage
+`https://secret-falls-39513.herokuapp.com/new/<URL GOES HERE>`
+
 #### Response format
 
 Valid URL:
