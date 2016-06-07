@@ -80,7 +80,7 @@ mongo.connect(url, function(err, db) {
       })
 
       var server = app.listen(process.env.PORT || 8080, function() {
-        console.log('Server listening on port ${server.address().port')
+        console.log(`Server listening on port ${server.address().port}`)
       })
     })
 
