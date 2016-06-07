@@ -86,7 +86,7 @@ mongo.connect(url, function(err, db) {
 
     if (!isValidURL(url))
       return res.status(422).json({
-        error: "Format of provided URL is invalid. Remember http:// or https://"
+        error: "Format of provided URL is invalid. Remember http:// or https://",
         provided_url: url
       })
       next()
@@ -110,7 +110,7 @@ mongo.connect(url, function(err, db) {
 
   function urlJSON(originalURL, shortURL) {
     return {
-      original_url: originalURL
+      original_url: originalURL,
       short_url: shortURL
     }
   }
@@ -119,5 +119,5 @@ mongo.connect(url, function(err, db) {
     return `${req.protocol}://${req.hostname}/${id.toString(36)}`
   }
 
-  function keyToId(key) { return parseInt(key, 36)
+  function keyToId(key) { return parseInt(key, 36) }
 })
