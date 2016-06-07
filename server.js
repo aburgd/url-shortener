@@ -27,7 +27,7 @@ mongo.connect(url, function(err, db) {
       if (err) throw err
       console.log("Indices created/verified.")
 
-    let sequenceID = 0
+    var sequenceID = 0
 
     app.get("/new/:url(*)", validateURL, alreadyExists, function(req, res) {
       var originalURL = req.params.url
