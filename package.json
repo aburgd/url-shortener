@@ -1,0 +1,30 @@
+{
+  "name": "url-short",
+  "version": "1.0.0",
+  "description": "Shortens URLs passed as strings, redirects to full URLs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aburgd/url-shortener.git"
+  },
+  "keywords": [
+    "url",
+    "url-shortener"
+  ],
+  "author": "Alec Burgdorf",
+  "email": "aeburgd@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aburgd/url-shortener/issues"
+  },
+  "homepage": "https://github.com/aburgd/url-shortener#readme",
+  "engines": {
+    "node": "4.4.5"
+  },
+  "dependencies": {
+    "jade": "^1.9.2"
+  }
+}
