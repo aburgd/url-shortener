@@ -30,30 +30,32 @@ mongo.connect(url, function(err, db) {
     var sequenceID = 0
 
     app.get("/new/:url(*)", validateURL, alreadyExists, function(req, res) {
-      var originalURL = req.params.url
 
-      urls.find().sort({sequence_id: -1}).limit(1).next(function(err, doc) {
-        if (err) throw err
+        var originalURL = req.params.url
 
-        if (doc && doc.sequence_id >= 0)
-          sequenceID = doc.sequence_id + 1
+        urls.find().sort({sequence_id: -1}).limit(1).next(function(err, doc) {
+          if (err) throw err
+
+          if (doc && doc.sequence_id >= 0)
+            sequenceID = doc.sequence_id + 1
+
           urls.insertOne({
             original_url: originalURL,
             sequence_id: sequenceID
           }, function(err, result) {
-
             if (err) throw err
 
             var shortURL = idToUrl(sequenceID, req)
-            var jsonResp = urlJSON(original, short)
+            var jsonResponse = urlJSON(originalURL, shortURL)
 
-            res.json(jsonResp)
+            res.json(jsonResponse);
           })
         })
       })
 
-      app.get("/:urlKey", function (req, res) {
+      app.get("/:urlKey", function(req, res) {
         var urlKey = req.params.urlKey
+
         var cursor = urls.find({sequence_id: parseInt(urlKey, 36)}).limit(1)
 
         cursor.hasNext(function(err, exists) {
@@ -62,14 +64,15 @@ mongo.connect(url, function(err, db) {
           if (exists) {
             cursor.next(function(err, doc) {
               if (err) throw err
+
               res.redirect(doc.original_url)
             })
           } else {
-              res.status(404).json({
-                error: "No URL associated with this key."
-              })
-            }
-          })
+            res.status(404).json({
+              error: "No URL associated with this key."
+            })
+          }
+        })
       })
 
       app.get("*", function(req, res) {
@@ -93,15 +96,22 @@ mongo.connect(url, function(err, db) {
   }
 
   function alreadyExists(req, res, next) {
+
     var cursor = urls.find({original_url: req.params.url}).limit(1)
 
-    cursor.hasNext(function(err, doc) {
+    cursor.hasNext(function(err, exists) {
       if (err) throw err
-      if (exists) {
-        var shortURL = idToUrl(doc.sequence_id, req)
-        var jsonResp = urlJSON(doc.original_url, short)
 
-        res.json(jsonResp)
+      if (exists) {
+        cursor.next(function(err, doc) {
+          if (err) throw err
+
+          var shortURL = idToUrl(doc.sequence_id, req)
+          var jsonResponse = urlJSON(doc.original_url, shortURL)
+
+          res.json(jsonResponse)
+        })
+
       } else {
         next()
       }
